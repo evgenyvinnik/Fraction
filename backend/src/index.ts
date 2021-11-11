@@ -1,9 +1,12 @@
 import express from "express";
 
-import database from './db';
-import {ApplicationStatus} from './db/DATABASE';
+import database from "./db";
+import { ApplicationStatus } from "./db/DATABASE";
+
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.get("/applications", async (req, res) => {
@@ -13,7 +16,7 @@ app.get("/applications", async (req, res) => {
   } catch (err) {
     return res.status(500).send();
   }
-})
+});
 
 app.get("/application/:id", async (req, res) => {
   const id = Number(req.params.id);
@@ -29,7 +32,7 @@ app.get("/application/:id", async (req, res) => {
   } catch (err) {
     return res.status(500).send();
   }
-})
+});
 
 app.get("/users", async (req, res) => {
   try {
@@ -38,7 +41,7 @@ app.get("/users", async (req, res) => {
   } catch (err) {
     return res.status(500).send();
   }
-})
+});
 
 app.get("/user/:id", async (req, res) => {
   const id = Number(req.params.id);
@@ -54,7 +57,7 @@ app.get("/user/:id", async (req, res) => {
   } catch (err) {
     return res.status(500).send();
   }
-})
+});
 
 app.get("/user/:id/applications", async (req, res) => {
   const id = Number(req.params.id);
@@ -67,13 +70,13 @@ app.get("/user/:id/applications", async (req, res) => {
       return res.status(404).send();
     }
     res.json(applications);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "Missing user") {
       return res.status(404).send();
     }
     return res.status(500).send();
   }
-})
+});
 
 app.post("/application/:id", async (req, res) => {
   const id = Number(req.params.id);
@@ -90,12 +93,12 @@ app.post("/application/:id", async (req, res) => {
       return res.status(404).send();
     }
     res.json(applications);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "Missing application") {
       return res.status(404).send();
     }
     return res.status(500).send();
   }
-})
+});
 
 app.listen(3001, () => console.log("Listening to port 3001"));
