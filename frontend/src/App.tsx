@@ -7,6 +7,12 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { User, Application } from "./interfaces";
+import { UsersPanel } from "./UsersPanel";
+import { ApplicationsPanel } from "./ApplicationsPanel";
+import { AddressPanel } from "./AddressPanel";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -41,48 +47,80 @@ function a11yProps(index: number) {
   };
 }
 
+const theme = createTheme({
+  typography: {
+    fontFamily: "Montserrat, Arial",
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        @font-face {
+          font-family: 'Montserrat';
+        }
+      `,
+    },
+  },
+});
+
 function App() {
   const [value, setValue] = useState(0);
+  const [Users, setUsers] = useState<User[]>([]);
+  const [Applications, setApplications] = useState<Application[]>([]);
 
   const handleChange = (_event: any, newValue: any) => {
     setValue(newValue);
   };
 
   useEffect(() => {
-    console.log("Fetching data");
     axios
       .get("http://localhost:3001/users")
-      .then((response) => {
-        console.log(response.data);
+      .then((response) => response.data)
+      .then((responseData) => {
+        setUsers(responseData);
       })
-      .catch((error) => {
-        // Code for handling the error
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/applications")
+      .then((response) => response.data)
+      .then((responseData) => {
+        setApplications(responseData);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-        </Tabs>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Users" {...a11yProps(0)} />
+            <Tab label="Applications" {...a11yProps(1)} />
+            <Tab label="Item Three" {...a11yProps(2)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <UsersPanel users={Users} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <ApplicationsPanel applications={Applications} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <AddressPanel />
+        </TabPanel>
       </Box>
-      <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-    </Box>
+    </ThemeProvider>
   );
 }
 
