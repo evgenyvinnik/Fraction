@@ -4,7 +4,7 @@ import "./App.css";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { User, Application } from "./interfaces";
@@ -25,11 +25,7 @@ function TabPanel(props: any) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -66,9 +62,14 @@ function App() {
   const [value, setValue] = useState(0);
   const [Users, setUsers] = useState<User[]>([]);
   const [Applications, setApplications] = useState<Application[]>([]);
+  const [TabApplicationVisible, setTabApplicationVisible] = useState(false);
+  const [ApplicationTabLabel, setApplicationTabLabel] = useState("");
 
   const handleChange = (_event: any, newValue: any) => {
     setValue(newValue);
+    if (newValue !== 2) {
+      setTabApplicationVisible(false);
+    }
   };
 
   useEffect(() => {
@@ -95,6 +96,12 @@ function App() {
       });
   }, []);
 
+  const applicationClicked = (application: Application) => {
+    setApplicationTabLabel(application.address.street);
+    setTabApplicationVisible(true);
+    setValue(2);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -107,14 +114,19 @@ function App() {
           >
             <Tab label="Users" {...a11yProps(0)} />
             <Tab label="Applications" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
+            {TabApplicationVisible ? (
+              <Tab label={ApplicationTabLabel} {...a11yProps(2)} />
+            ) : null}
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
           <UsersPanel users={Users} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <ApplicationsPanel applications={Applications} />
+          <ApplicationsPanel
+            applications={Applications}
+            applicationClicked={applicationClicked}
+          />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <AddressPanel />

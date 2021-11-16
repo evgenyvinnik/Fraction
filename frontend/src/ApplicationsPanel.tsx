@@ -1,13 +1,16 @@
 import { Application } from "./interfaces";
 import { ApplicationCard } from "./ApplicationCard";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-interface Props {
+interface ApplicationsPanelProps {
   applications: Application[];
+  applicationClicked: (application: Application) => void;
 }
 
-export const ApplicationsPanel = ({ applications }: Props) => {
+export const ApplicationsPanel = ({
+  applications,
+  applicationClicked,
+}: ApplicationsPanelProps) => {
   return (
     <Grid
       container
@@ -16,7 +19,10 @@ export const ApplicationsPanel = ({ applications }: Props) => {
     >
       {applications.map((application, index) => (
         <Grid item xs={2} sm={4} md={4} key={index}>
-          <ApplicationCard application={application} />
+          <ApplicationCard
+            application={application}
+            applicationClicked={applicationClicked}
+          />
         </Grid>
       ))}
     </Grid>

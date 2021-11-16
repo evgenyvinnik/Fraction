@@ -1,20 +1,25 @@
 import { Application } from "./interfaces";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
 
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 interface ApplicationCardProps {
   application: Application;
+  applicationClicked: (application: Application) => void;
 }
 
-export const ApplicationCard = ({ application }: ApplicationCardProps) => {
+export const ApplicationCard = ({
+  application,
+  applicationClicked,
+}: ApplicationCardProps) => {
   return (
     <Card>
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={12} sm container>
-            {/* <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1" component="div">
                   Standard license
@@ -31,12 +36,15 @@ export const ApplicationCard = ({ application }: ApplicationCardProps) => {
                   Remove
                 </Typography>
               </Grid>
-            </Grid> */}
-            {/* <Grid item>
-              <Typography variant="subtitle1" component="div">
-                $19.00
-              </Typography>
-            </Grid> */}
+            </Grid>
+            <Grid item>
+              <Chip
+                label="Chip Filled"
+                onClick={() => {
+                  applicationClicked(application);
+                }}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </CardContent>
