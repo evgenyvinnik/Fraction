@@ -39,18 +39,16 @@ export const UserCard = ({ user }: UserCardProps) => {
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
-              {/* <Grid item xs>
+              <Grid item xs>
                 <Typography gutterBottom variant="subtitle1" component="div">
-                  Standard license
+                  {user.firstName} {user.lastName}
                 </Typography>
-                <Typography variant="body2" gutterBottom>
-                  Full resolution 1920x1080 • JPEG
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  ID: 1030114
-                </Typography>
+                <Typography variant="h3" component="h3">
+              <b>{user.applications.length}</b>{" "}
+              {user.applications.length === 1 ? "application" : "applications"}
+            </Typography>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <Typography sx={{ cursor: "pointer" }} variant="body2">
                   Remove
                 </Typography>
