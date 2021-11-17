@@ -1,4 +1,4 @@
-import { Application, ApplicationStatus } from "./interfaces";
+import { Application, ApplicationStatus, User } from "./interfaces";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 
 interface ApplicationCardProps {
   application: Application;
+  applicant: User | undefined;
   applicationClicked: (application: Application) => void;
 }
 
@@ -52,6 +53,7 @@ const amountToText = (amount: number) => {
 
 export const ApplicationCard = ({
   application,
+  applicant,
   applicationClicked,
 }: ApplicationCardProps) => {
   return (
@@ -99,14 +101,18 @@ export const ApplicationCard = ({
                 Requested: <b>{amountToText(application.requestedAmount)}</b>
               </Typography>
               <Typography sx={{ cursor: "pointer" }} variant="body2">
-                Created{" "}
-                <b>{new Date(application.created).toLocaleDateString('en-US', {
-  day: 'numeric', month: 'long', year: 'numeric'
-})}</b>
+                Created:{" "}
+                {new Date(application.created).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
               </Typography>
-              <Typography sx={{ cursor: "pointer" }} variant="body2">
-                Applicant <b>{application.applicant}</b>
-              </Typography>
+              {applicant ? (
+                <Typography sx={{ cursor: "pointer" }} variant="body2">
+                  Applicant: {applicant!.firstName} {applicant!.lastName}
+                </Typography>
+              ) : null}
             </Grid>
           </Grid>
         </Grid>

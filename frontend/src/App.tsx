@@ -97,7 +97,9 @@ function App() {
   }, []);
 
   const applicationClicked = (application: Application) => {
-    setApplicationTabLabel(application.address.street);
+    setApplicationTabLabel(
+      application.address.streetNumber + " " + application.address.street
+    );
     setTabApplicationVisible(true);
     setValue(2);
   };
@@ -125,6 +127,7 @@ function App() {
         <TabPanel value={value} index={1}>
           <ApplicationsPanel
             applications={Applications}
+            users={Users}
             applicationClicked={applicationClicked}
           />
         </TabPanel>
