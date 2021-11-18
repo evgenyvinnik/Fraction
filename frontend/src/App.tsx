@@ -63,7 +63,9 @@ function App() {
   const [Users, setUsers] = useState<User[]>([]);
   const [Applications, setApplications] = useState<Application[]>([]);
   const [TabApplicationVisible, setTabApplicationVisible] = useState(false);
-  const [ApplicationTabLabel, setApplicationTabLabel] = useState("");
+  const [ApplicationTabLabel, setApplicationTabLabel] = useState<string>("");
+  const [ApplicationTabValue, setApplicationTabValue] =
+    useState<Application | null>(null);
 
   const handleChange = (_event: any, newValue: any) => {
     setValue(newValue);
@@ -101,6 +103,7 @@ function App() {
       application.address.streetNumber + " " + application.address.street
     );
     setTabApplicationVisible(true);
+    setApplicationTabValue(application);
     setValue(2);
   };
 
@@ -132,7 +135,12 @@ function App() {
           />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <AddressPanel />
+          <AddressPanel
+            application={ApplicationTabValue}
+            applicant={Users.find(
+              (user) => user.id === ApplicationTabValue?.applicant
+            )}
+          />
         </TabPanel>
       </Box>
     </ThemeProvider>

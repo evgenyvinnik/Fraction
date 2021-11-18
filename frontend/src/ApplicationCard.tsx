@@ -1,4 +1,5 @@
-import { Application, ApplicationStatus, User } from "./interfaces";
+import { Application, User } from "./interfaces";
+import { statusToText, statusToColor, amountToText } from "./utils";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
@@ -12,44 +13,6 @@ interface ApplicationCardProps {
   applicant: User | undefined;
   applicationClicked: (application: Application) => void;
 }
-
-const statusToText = (status: ApplicationStatus) => {
-  switch (status) {
-    case ApplicationStatus.DRAFT:
-      return "Draft";
-    case ApplicationStatus.IN_PROGRESS:
-      return "In progress";
-    case ApplicationStatus.CLOSED:
-      return "Closed";
-    case ApplicationStatus.REJECTED:
-      return "Rejected";
-    default:
-      return "Unknown";
-  }
-};
-
-const statusToColor = (status: ApplicationStatus) => {
-  switch (status) {
-    case ApplicationStatus.DRAFT:
-      return "#4D4D4D";
-    case ApplicationStatus.IN_PROGRESS:
-      return "#82C882";
-    case ApplicationStatus.CLOSED:
-      return "#F4BE0A";
-    case ApplicationStatus.REJECTED:
-      return "#ED5B5D";
-    default:
-      return "#FFFFFF";
-  }
-};
-
-const amountToText = (amount: number) => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  }).format(amount);
-};
 
 export const ApplicationCard = ({
   application,

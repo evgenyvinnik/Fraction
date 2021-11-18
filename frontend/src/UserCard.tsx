@@ -2,17 +2,14 @@ import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
+import { randomColor } from "./utils";
+
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { User } from "./interfaces";
 
 interface UserCardProps {
   user: User;
-}
-
-function randomColor() {
-  const colors = ["#ED5B5D", "#F4BE0A", "#82C882", "#5B8DED", "#ED875B"];
-  return colors[Math.floor(Math.random() * colors.length)];
 }
 
 function stringAvatar(
@@ -44,32 +41,15 @@ export const UserCard = ({ user }: UserCardProps) => {
                   {user.firstName} {user.lastName}
                 </Typography>
                 <Typography variant="h3" component="h3">
-              <b>{user.applications.length}</b>{" "}
-              {user.applications.length === 1 ? "application" : "applications"}
-            </Typography>
-              </Grid>
-              {/* <Grid item>
-                <Typography sx={{ cursor: "pointer" }} variant="body2">
-                  Remove
+                  <b>{user.applications.length}</b>{" "}
+                  {user.applications.length === 1
+                    ? "application"
+                    : "applications"}
                 </Typography>
-              </Grid> */}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-        {/* <Box sx={{ display: "flex", flexDirection: "row" }}>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="h2" component="h2">
-              {user.firstName} {user.lastName}
-            </Typography>
-            <Typography variant="h3" component="h3">
-              <b>{user.applications.length}</b>{" "}
-              {user.applications.length === 1 ? "application" : "applications"}
-            </Typography>
-          </Box>
-        </Box> */}
       </CardContent>
     </Card>
   );
