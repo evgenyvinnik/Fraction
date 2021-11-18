@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import "./App.css";
 
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-// import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { User, Application } from "./interfaces";
@@ -13,6 +11,7 @@ import { ApplicationsPanel } from "./ApplicationsPanel";
 import { AddressPanel } from "./AddressPanel";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { findUserForApplication } from "./utils";
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -117,10 +116,34 @@ function App() {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <Tab label="Users" {...a11yProps(0)} />
-            <Tab label="Applications" {...a11yProps(1)} />
+            <Tab
+              label="Users"
+              {...a11yProps(0)}
+              style={{
+                fontSize: "36px",
+                fontWeight: "bold",
+                lineHeight: "44px",
+              }}
+            />
+            <Tab
+              label="Applications"
+              {...a11yProps(1)}
+              style={{
+                fontSize: "36px",
+                fontWeight: "bold",
+                lineHeight: "44px",
+              }}
+            />
             {TabApplicationVisible ? (
-              <Tab label={ApplicationTabLabel} {...a11yProps(2)} />
+              <Tab
+                label={ApplicationTabLabel}
+                {...a11yProps(2)}
+                style={{
+                  fontSize: "36px",
+                  fontWeight: "bold",
+                  lineHeight: "44px",
+                }}
+              />
             ) : null}
           </Tabs>
         </Box>
@@ -137,9 +160,7 @@ function App() {
         <TabPanel value={value} index={2}>
           <AddressPanel
             application={ApplicationTabValue}
-            applicant={Users.find(
-              (user) => user.id === ApplicationTabValue?.applicant
-            )}
+            applicant={findUserForApplication(Users, ApplicationTabValue)}
           />
         </TabPanel>
       </Box>

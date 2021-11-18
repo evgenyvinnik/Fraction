@@ -1,7 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Box from "@mui/material/Box";
 import { randomColor } from "./utils";
 
 import Typography from "@mui/material/Typography";
@@ -34,13 +33,15 @@ export const UserCard = ({ user }: UserCardProps) => {
           <Grid item>
             <Avatar {...stringAvatar(user.firstName[0], user.lastName[0])} />
           </Grid>
-          <Grid item xs={12} sm container>
+          <Grid item xs={12} sm container spacing={2}>
             <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1" component="div">
-                  {user.firstName} {user.lastName}
+              <Grid item xs spacing={4}>
+                <Typography gutterBottom variant="h6">
+                  <b>
+                    {user.firstName} {user.lastName}
+                  </b>
                 </Typography>
-                <Typography variant="h3" component="h3">
+                <Typography variant="body1">
                   <b>{user.applications.length}</b>{" "}
                   {user.applications.length === 1
                     ? "application"

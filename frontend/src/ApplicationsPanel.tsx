@@ -1,6 +1,7 @@
 import { Application, User } from "./interfaces";
 import { ApplicationCard } from "./ApplicationCard";
 import Grid from "@mui/material/Grid";
+import { findUserForApplication } from "./utils";
 
 interface ApplicationsPanelProps {
   applications: Application[];
@@ -23,7 +24,7 @@ export const ApplicationsPanel = ({
         <Grid item xs={2} sm={4} md={4} key={index}>
           <ApplicationCard
             application={application}
-            applicant={users.find((user) => user.id === application.applicant)}
+            applicant={findUserForApplication(users, application)}
             applicationClicked={applicationClicked}
           />
         </Grid>

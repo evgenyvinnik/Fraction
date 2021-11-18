@@ -27,12 +27,14 @@ export const ApplicationCard = ({
             <Grid item xs container direction="row" spacing={2}>
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
-                  <Typography gutterBottom variant="subtitle1" component="div">
-                    {application.address.streetNumber}{" "}
-                    {application.address.street}
-                    {application.address.premises
-                      ? ", " + application.address.premises
-                      : null}
+                  <Typography gutterBottom variant="h6" component="div">
+                    <b>
+                      {application.address.streetNumber}{" "}
+                      {application.address.street}
+                      {application.address.premises
+                        ? ", " + application.address.premises
+                        : null}
+                    </b>
                   </Typography>
                   <Typography variant="body2" gutterBottom>
                     {application.address.city}
@@ -58,12 +60,12 @@ export const ApplicationCard = ({
                 />
               </Grid>
             </Grid>
-            <Divider />
+            <Divider sx={{ margin: "15px" }} />
             <Grid item>
-              <Typography sx={{ cursor: "pointer" }} variant="body2">
+              <Typography variant="body2">
                 Requested: <b>{amountToText(application.requestedAmount)}</b>
               </Typography>
-              <Typography sx={{ cursor: "pointer" }} variant="body2">
+              <Typography variant="body2">
                 Created:{" "}
                 {new Date(application.created).toLocaleDateString("en-US", {
                   day: "numeric",
@@ -72,7 +74,7 @@ export const ApplicationCard = ({
                 })}
               </Typography>
               {applicant ? (
-                <Typography sx={{ cursor: "pointer" }} variant="body2">
+                <Typography variant="body2">
                   Applicant: {applicant!.firstName} {applicant!.lastName}
                 </Typography>
               ) : null}

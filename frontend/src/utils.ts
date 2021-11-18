@@ -1,4 +1,4 @@
-import { ApplicationStatus } from "./interfaces";
+import { ApplicationStatus, User, Application } from "./interfaces";
 
 export const randomColor = () => {
   const colors = ["#ED5B5D", "#F4BE0A", "#82C882", "#5B8DED", "#ED875B"];
@@ -41,4 +41,11 @@ export const amountToText = (amount: number) => {
     currency: "USD",
     minimumFractionDigits: 0,
   }).format(amount);
+};
+
+export const findUserForApplication = (
+  users: User[],
+  application: Application | null
+): User => {
+  return users.find((user) => user.id === application?.applicant)!;
 };

@@ -3,13 +3,13 @@ import { User, Application, ApplicationStatus } from "./interfaces";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import { statusToText, amountToText } from "./utils";
+import { statusToText, amountToText, statusToColor } from "./utils";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
 
 interface AddressPanelProps {
   application: Application | null;
-  applicant: User | undefined;
+  applicant: User;
 }
 
 export const AddressPanel = ({ application, applicant }: AddressPanelProps) => {
@@ -39,7 +39,7 @@ export const AddressPanel = ({ application, applicant }: AddressPanelProps) => {
 
   return (
     <Box>
-      <Typography gutterBottom variant="subtitle1" component="div">
+      <Link gutterBottom variant="h6" component="div">
         {application!.address.streetNumber} {application!.address.street}
         {application!.address.premises
           ? ", " + application!.address.premises
@@ -49,12 +49,12 @@ export const AddressPanel = ({ application, applicant }: AddressPanelProps) => {
         {application!.address.province}
         {", "}
         {application!.address.country}
-      </Typography>
+      </Link>
 
-      <Typography sx={{ cursor: "pointer" }} variant="body2">
+      <Typography variant="h6">
         Requested: <b>{amountToText(application!.requestedAmount)}</b>
       </Typography>
-      <Typography sx={{ cursor: "pointer" }} variant="body2">
+      <Typography variant="h6">
         Created:{" "}
         {new Date(application!.created).toLocaleDateString("en-US", {
           day: "numeric",
@@ -63,27 +63,53 @@ export const AddressPanel = ({ application, applicant }: AddressPanelProps) => {
         })}
       </Typography>
       {applicant ? (
-        <Typography sx={{ cursor: "pointer" }} variant="body2">
+        <Typography variant="h6">
           Applicant: {applicant!.firstName} {applicant!.lastName}
         </Typography>
       ) : null}
-      <Typography sx={{ cursor: "pointer" }} variant="body2">
-        Status:{statusToText(application!.status)}
+      <Typography component="span" variant="h6">
+        Status:{" "}
       </Typography>
-      <Stack spacing={1}>
+      <Typography
+        component="span"
+        variant="h6"
+        style={{
+          color: statusToColor(application!.status),
+          fontWeight: "bold",
+        }}
+      >
+        {statusToText(application!.status)}
+      </Typography>
+
+      <Stack
+        spacing={1}
+        style={{
+          marginTop: "1.5rem",
+        }}
+      >
         {showChangeState ? null : (
-          <Link href="#" onClick={onChangeStateClick} variant="inherit">
+          <Link
+            href="#"
+            onClick={onChangeStateClick}
+            variant="h6"
+            style={{
+              color: "#82C882",
+              fontWeight: "bold",
+            }}
+          >
             Change Status
           </Link>
         )}
-
         {showChangeState ? (
           <Link
             href="#"
             onClick={() => {
               onSetStateClick(ApplicationStatus.DRAFT);
             }}
-            variant="inherit"
+            style={{
+              color: "#4D4D4D",
+            }}
+            variant="h6"
           >
             Draft
           </Link>
@@ -95,7 +121,10 @@ export const AddressPanel = ({ application, applicant }: AddressPanelProps) => {
             onClick={() => {
               onSetStateClick(ApplicationStatus.IN_PROGRESS);
             }}
-            variant="inherit"
+            style={{
+              color: "#4D4D4D",
+            }}
+            variant="h6"
           >
             In Progress
           </Link>
@@ -107,7 +136,10 @@ export const AddressPanel = ({ application, applicant }: AddressPanelProps) => {
             onClick={() => {
               onSetStateClick(ApplicationStatus.CLOSED);
             }}
-            variant="inherit"
+            style={{
+              color: "#4D4D4D",
+            }}
+            variant="h6"
           >
             Closed
           </Link>
@@ -118,13 +150,23 @@ export const AddressPanel = ({ application, applicant }: AddressPanelProps) => {
             onClick={() => {
               onSetStateClick(ApplicationStatus.REJECTED);
             }}
-            variant="inherit"
+            style={{
+              color: "#4D4D4D",
+            }}
+            variant="h6"
           >
             Rejected
           </Link>
         ) : null}
         {showChangeState ? (
-          <Link href="#" onClick={onCancelClick} variant="inherit">
+          <Link
+            href="#"
+            onClick={onCancelClick}
+            variant="h6"
+            style={{
+              color: "#ED5B5D",
+            }}
+          >
             Cancel
           </Link>
         ) : null}
